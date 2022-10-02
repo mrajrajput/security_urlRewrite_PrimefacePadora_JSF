@@ -1,0 +1,137 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{msg['page.system']}</ui:define>
+
+    <ui:define name="content">
+        <div class="grid help-page">
+            <div class="col-12 md:col-6">
+                <div class="card ui-fluid">
+                    <div class="card">
+                        <h4>System Status</h4>
+                        <p>All services are operational.</p>
+                        <div class="status-bars">
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar status-bar-failure"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                            <div class="status-bar"></div>
+                        </div>
+                        <div class="status-bar-footer">
+                            <span>30 Days Ago</span>
+                            <span>Today</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card ui-fluid">
+                    <h4>Application Status</h4>
+                    <div class="field">
+                        <p:outputLabel for="cellphone">Version</p:outputLabel>
+                        <p:inputText id="cellphone" disabled="true"/>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel for="status" value="Status" />
+                        <p:selectOneMenu id="status">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Option 1" itemValue="Option 1" />
+                            <f:selectItem itemLabel="Option 2" itemValue="Option 2" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel for="min" value="Minimum version" />
+                        <p:selectOneMenu id="min">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Option 1" itemValue="Option 1" />
+                            <f:selectItem itemLabel="Option 2" itemValue="Option 2" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="field">
+                        <p:commandButton type="button" value="Save"
+                                         style="display:inline-block;margin-top:5px; width: auto"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 md:col-6">
+                <div class="card">
+                    <h4>System Status</h4>
+                    <div class="grid formgrid">
+                        <div class="col-12 mb-2 lg:col-4 mb-lg-0">
+                            <h6>CPU Usage</h6>
+                            <small class="block">100%</small>
+                        </div>
+                        <div class="col-12 mb-2 lg:col-4 mb-lg-0">
+                            <h6>Disc Usage</h6>
+                            <small class="block">100%</small>
+                        </div>
+                        <div class="col-12 mb-2 lg:col-4 mb-lg-0">
+                            <h6>Databse</h6>
+                            <small class="block">Mysql UP</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h5>#{msg['profile.activity']}</h5>
+                    <p:dataTable widgetVar="dataDT" id="dataTable" var="data" value="#{systemBean.list}"
+                                 reflow="true"  resizableColumns="true"
+                                 rowKey="#{data.id}" rowIndexVar="row"
+                                 paginator="true" paginatorPosition="bottom" paginatorTemplate="
+                                                                 {PreviousPageLink} {PageLinks} {NextPageLink}  "
+                                  rows="10"  >
+
+                        <p:column headerText="#{msg['table.header.index']}" responsivePriority="6"
+                                  style="vertical-align: middle;">
+                            <h:outputText value=" #{row+1}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msg['table.header.user']}" responsivePriority="2">
+                            <h:outputText value="#{data.userDto.name} #{data.userDto.family}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['table.header.version']}" responsivePriority="1">
+                            <h:outputText value="#{data.version}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['table.header.desc']}" responsivePriority="4">
+                            <h:outputText value="#{data.description}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['table.header.enable']}" responsivePriority="3">
+                            <h:outputText value="#{data.enable}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['table.header.minVersion']}" responsivePriority="5">
+                            <h:outputText value="#{data.minVersion}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

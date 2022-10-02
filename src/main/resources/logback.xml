@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %level %logger{35} [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--
+           COMMON
+     -->
+    <root level="INFO" additivity="false">
+        <appender-ref ref="console"/>
+    </root>
+    <!--
+            LOGGERS
+     -->
+<!--    <logger name="com.zaxxer.hikari.pool" additivity="false" level="WARN">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="io.netty" additivity="false" level="WARN">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="org.hibernate.type.BasicTypeRegistry" additivity="false" level="WARN">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="org.hibernate.type.BasicType" additivity="false" level="WARN">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="org.springframework.test" additivity="false" level="DEBUG">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="org.hibernate.engine" additivity="false" level="DEBUG">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="org.hibernate.type" additivity="false" level="DEBUG">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="org.hibernate.internal" additivity="false" level="DEBUG">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="org.springframework.beans.factory" additivity="false" level="DEBUG">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="io.netty" additivity="false" level="DEBUG">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+<!--    <logger name="org.springframework.security" additivity="false" level="DEBUG">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </logger>-->
+
+<!--	<logger name="org.springframework.*" additivity="false" level="TRACE">-->
+<!--		<appender-ref ref="console"/>-->
+<!--	</logger>-->
+</configuration>

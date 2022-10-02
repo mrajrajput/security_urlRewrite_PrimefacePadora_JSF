@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{msg['page.used.redeem']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="grid crud-demo">
+                <div class="col-12">
+                    <div class="card">
+                        <p:dataTable widgetVar="dataDT" id="dataTable" var="data" value="#{redeemUserBean.dtoList}"
+                                     reflow="true" style="min-height: 500px" resizableColumns="true"
+                                     rowKey="#{data.id}" rowIndexVar="row"
+                                     paginator="true" rows="10" paginatorPosition="bottom" >
+                            <f:facet name="header">
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    <p:commandButton id="new" type="button" value="#{msg['menu.new']}"
+                                                     update="form"  onclick="PF('dlg').show()" icon="pi pi-plus"/>
+                                    <div class="customers-table-header" style="float: right">
+                                        <span class="ui-input-icon-left filter-container">
+                                            <i class="pi pi-search"/>
+                                            <p:inputText id="globalFilter" onkeyup="PF('dataDT').filter()"
+                                                         placeholder="Search "/>
+                                        </span>
+                                        <span style="font-weight: bold">
+                                            <p:commandButton id="toggler" type="button" icon="pi pi-align-justify"/>
+                                            <p:columnToggler datasource="dataTable" trigger="toggler"/>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </f:facet>
+                            <p:column headerText="#{msg['table.header.user']}" width="10%" responsivePriority="6"
+                                      style="vertical-align: middle;">
+                                <h:outputText value=" #{row+1}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.user']}" sortBy="#{data.user.family}"
+                                      filterBy="#{data.user.family}" responsivePriority="4">
+                                <h:outputText value="#{data.user.family} #{data.user.family}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.title']}" sortBy="#{data.redeem.title}"
+                                      filterBy="#{data.redeem.title}"
+                                      responsivePriority="3">
+                                <h:outputText value="#{data.redeem.title}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.count']}" sortBy="#{data.redeem.count}"
+                                      filterBy="#{data.redeem.count}"
+                                      responsivePriority="4">
+                                <h:outputText value="#{data.redeem.count}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.datetime']}" sortBy="#{data.createDate}"
+                                      filterBy="#{data.createDate}" responsivePriority="5">
+                                <h:outputText value="#{data.createDate}">
+                                    <f:convertDateTime pattern="yyyy/MM/dd HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="#{msg['table.header.operation']}" width="10%"
+                                      exportable="false"   style="text-align: center;" responsivePriority="2">
+                                <p:menuButton icon="pi pi-cog" buttonStyleClass="ui-button-secondary"
+                                              buttonStyle="box-shadow: 0 0 10px">
+                                    <p:menuitem value="#{msg['menu.view']}" update=":messagesPanel form" icon="pi pi-eye"  oncomplete="PF('dlg').show()">
+                                        <f:setPropertyActionListener value="#{data}"
+                                                                     target="#{RedeemUserBean.redeemDto}"/>
+                                    </p:menuitem>
+                                    <p:menuitem value="#{msg['menu.edit']}" update=":messagesPanel form" icon="pi pi-pencil"  oncomplete="PF('dlg').show()">
+                                        <f:setPropertyActionListener value="#{data}"
+                                                                     target="#{RedeemUserBean.redeemDto}"/>
+                                    </p:menuitem>
+                                    <p:separator />
+                                    <p:menuitem value="#{msg['menu.delete']}"  action="#{RedeemUserBean.deleteRecord}" update=":messagesPanel form" icon="pi pi-times">
+                                        #{msg['menu.delete']}
+                                        <p:confirm header="#{msg['menu.confirmation']}" message="#{msg['menu.confirmation.message']}" icon="pi pi-info-circle"/>
+                                        <f:setPropertyActionListener value="#{data}"
+                                                                     target="#{RedeemUserBean.redeemDto}"/>
+                                    </p:menuitem>
+                                </p:menuButton>
+                            </p:column>
+                            <f:facet name="footer">
+                                <div class="p-d-flex p-jc-between">
+                                    <p:commandButton icon="pi pi-file-excel" styleClass="p-mr-2 p-mb-2"
+                                                     style="margin: 2px">
+                                        <p:dataExporter type="xls" target="dataTable" fileName="exort"/>
+                                    </p:commandButton>
+
+                                    <p:commandButton icon="pi pi-file-pdf" styleClass="p-mr-2 p-mb-2"
+                                                     style="margin: 2px">
+                                        <p:dataExporter type="pdf" target="dataTable" fileName="exort"/>
+                                    </p:commandButton>
+
+                                    <p:commandButton icon="pi pi-file" styleClass="p-mr-2 p-mb-2" style="margin: 2px">
+                                        <p:dataExporter type="csv" target="dataTable" fileName="exort"/>
+                                    </p:commandButton>
+                                </div>
+
+                            </f:facet>
+                        </p:dataTable>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="350">
+                            <p:commandButton value="#{msg['menu.confirmation.yes']}" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="#{msg['menu.confirmation.no']}" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

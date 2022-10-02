@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<groupId>com.rajputLife</groupId>
+	<artifactId>security_urlRewrite_JSF_PrimeFacesPandora</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>rajputLife</name>
+	<description>Spring Boot - Primefaces-Pandora - JSF - URL ReWrite - SpringSecurity with Form and OAuth login - PF components</description>
+
+	<!--	<packaging>war</packaging>-->
+	<packaging>${packaging.type}</packaging>
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.1</version>
+	</parent>
+
+	<properties>
+		<rewrite-servlet.version>3.5.1.Final</rewrite-servlet.version>
+		<primefaces.version>11.0.0</primefaces.version>
+		<lombok.version>1.18.22</lombok.version>
+		<myfaces-impl.version>2.2.12</myfaces-impl.version>
+		<java.version>1.8</java.version>
+
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<packaging.type>war</packaging.type>
+		<owb.version>2.0.20</owb.version>
+		<mojarra.version>2.3.14</mojarra.version>
+		<open-pdf.version>1.3.24</open-pdf.version>
+		<poi.version>5.0.0</poi.version>
+		<maven.compiler.sources>1.8</maven.compiler.sources>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+		<!-- Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- Figure out if we need validation-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- Spring Security-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		<!-- Delete this and find replacement for JSF, if any-->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+
+		<!-- JSF more information in Readme.md-->
+<!--		<dependency>-->
+<!--			<groupId>com.sun.faces</groupId>-->
+<!--			<artifactId>jsf-api</artifactId>-->
+<!--			<version>2.2.12</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.sun.faces</groupId>-->
+<!--			<artifactId>jsf-impl</artifactId>-->
+<!--			<version>2.2.12</version>-->
+<!--		</dependency>-->
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>pandora</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
+
+		<!-- servlet provided by tomcat -->
+		<!--	<dependency>-->
+		<!--		<groupId>javax.servlet</groupId>-->
+		<!--		<artifactId>javax.servlet-api</artifactId>-->
+		<!--		<version>3.1.0</version>-->
+		<!--		<scope>provided</scope>-->
+		<!--	</dependency>-->
+		<!--	<dependency>-->
+		<!--		<groupId>javax.el</groupId>-->
+		<!--		<artifactId>el-api</artifactId>-->
+		<!--		<version>2.2</version>-->
+		<!--	</dependency>-->
+
+
+		<!--In conclusion, the spring-boot-starter-web includes the tomcat embedded dependency but it doesn't
+		includes the jasper embedded dependency, so that should be the reason to declare it separately.-->
+		<!-- tomcat-embed-jasper -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+
+
+		<!-- ocpsoft for url-rewrite -->
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-servlet</artifactId>
+			<version>${rewrite-servlet.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-integration-faces</artifactId>
+			<version>${rewrite-servlet.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-config-prettyfaces</artifactId>
+			<version>${rewrite-servlet.version}</version>
+		</dependency>
+
+		<!--primefaces-->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/javax/javaee-api &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>javax</groupId>-->
+<!--			<artifactId>javaee-api</artifactId>-->
+<!--			<version>7.0</version>-->
+<!--			<scope>provided</scope>-->
+<!--		</dependency>-->
+
+
+
+
+
+		<!--Pandora - Primefaces code - Start -->
+
+<!--		<dependency>-->
+<!--			<groupId>org.glassfish</groupId>-->
+<!--			<artifactId>jakarta.faces</artifactId>-->
+<!--			<version>${mojarra.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>javax.el</groupId>-->
+<!--			<artifactId>javax.el-api</artifactId>-->
+<!--			<version>3.0.0</version>-->
+<!--			<scope>provided</scope>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>javax.servlet</groupId>-->
+<!--			<artifactId>javax.servlet-api</artifactId>-->
+<!--			<version>3.1.0</version>-->
+<!--			<scope>provided</scope>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.glassfish.jaxb</groupId>-->
+<!--			<artifactId>jaxb-runtime</artifactId>-->
+<!--			<version>4.0.1</version>-->
+<!--		</dependency>-->
+
+
+		<!-- Export Demo Impl -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xmlgraphics</groupId>
+					<artifactId>batik-all</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>de.rototor.pdfbox</groupId>
+					<artifactId>graphics2d</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.santuario</groupId>
+					<artifactId>xmlsec</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcpkix-jdk15on</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.github.virtuald</groupId>
+					<artifactId>curvesapi</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcprov-jdk15on</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.github.librepdf</groupId>
+			<artifactId>openpdf</artifactId>
+			<version>${open-pdf.version}</version>
+		</dependency>
+
+
+		<!--Pandora - Primefaces code - End -->
+
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+		</repository>
+
+		<repository>
+			<id>local-maven-repo</id>
+			<url>file:///${project.basedir}/repository</url>
+		</repository>
+	</repositories>
+
+
+
+	<!-- Package as an executable jar -->
+	<build>
+		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
+
+		<!--Pandora - Primefaces code - Start -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+				<includes>
+					<include>web.xml</include>
+				</includes>
+				<filtering>true</filtering>
+				<targetPath>${project.build.directory}</targetPath>
+			</resource>
+		</resources>
+		<plugins>
+
+			<!--<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>-->
+
+
+<!--			<plugin>-->
+<!--				<groupId>org.eclipse.jetty</groupId>-->
+<!--				<artifactId>jetty-maven-plugin</artifactId>-->
+<!--				<version>9.4.36.v20210114</version>-->
+<!--				<configuration>-->
+<!--					<webAppConfig>-->
+<!--						<contextPath>/pandora</contextPath>-->
+<!--					</webAppConfig>-->
+<!--					<scanIntervalSeconds>5</scanIntervalSeconds>-->
+<!--					<webXml>${project.build.directory}/web.xml</webXml>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+			</plugin>
+
+			<!--<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>-->
+
+		</plugins>
+		<!--Pandora - Primefaces code - End -->
+
+
+
+		<!-- This configuration is important because Rewrite is not prepared to look
+		 for configurations for non-classic
+		 web applications (i.e. for embedded applications like Spring Boot).
+		 So we need to tweak the build process
+		 a bit to make Rewrite serve its purpose. -->
+
+<!--		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>-->
+
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.springframework.boot</groupId>-->
+<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
+
+	</build>
+
+
+<!--	<profiles>-->
+<!--		<profile>-->
+<!--			<id>distribute</id>-->
+<!--			<properties>-->
+<!--				<packaging.type>jar</packaging.type>-->
+<!--			</properties>-->
+<!--			<build>-->
+
+<!--				<plugins>-->
+<!--					&lt;!&ndash;The Assembly Plugin for Maven enables developers to combine project output into a single distributable-->
+<!--                    archive that also contains dependencies, modules, site documentation, and other files.&ndash;&gt;-->
+<!--					<plugin>-->
+<!--						<artifactId>maven-assembly-plugin</artifactId>-->
+<!--						<version>2.3</version>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<id>build-layout</id>  &lt;!&ndash; Just for your identification &ndash;&gt;-->
+<!--								<phase>package</phase> &lt;!&ndash; Phase of Maven Lifecycle at which this plugin will gets executed &ndash;&gt;-->
+<!--								<goals>-->
+<!--									<goal>single</goal>  &lt;!&ndash;Assemble an application bundle or distribution from an assembly descriptor&ndash;&gt;-->
+<!--								</goals>-->
+<!--								<configuration>  &lt;!&ndash;allows you to configure the plugin for how it should behave during execution&ndash;&gt;-->
+<!--									<descriptors>-->
+<!--										<descriptor>src/assemble/layout.xml</descriptor>-->
+<!--									</descriptors>-->
+<!--									<finalName>${project.name}-layout-${project.version}</finalName>-->
+<!--									<appendAssemblyId>false</appendAssemblyId>-->
+<!--								</configuration>-->
+<!--							</execution>-->
+<!--							<execution>-->
+<!--								<id>build-theme</id>-->
+<!--								<phase>package</phase>-->
+<!--								<goals>-->
+<!--									<goal>single</goal>-->
+<!--								</goals>-->
+<!--								<configuration>-->
+<!--									<descriptors>-->
+<!--										<descriptor>src/assemble/theme.xml</descriptor>-->
+<!--									</descriptors>-->
+<!--									<finalName>${project.name}-theme-${project.version}</finalName>-->
+<!--									<appendAssemblyId>false</appendAssemblyId>-->
+<!--								</configuration>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--					</plugin>-->
+<!--					<plugin>-->
+<!--						&lt;!&ndash;This plugin provides the capability to package the artifact in an uber-jar, including its-->
+<!--                        dependencies and to shade - i.e. rename - the packages of some of the dependencies.&ndash;&gt;-->
+<!--						<groupId>org.apache.maven.plugins</groupId>-->
+<!--						<artifactId>maven-shade-plugin</artifactId>-->
+<!--						<configuration>-->
+<!--							<finalName>${project.name}-theme-${project.version}-jakarta</finalName>-->
+<!--							<shadedArtifactAttached>false</shadedArtifactAttached>-->
+<!--							<createDependencyReducedPom>false</createDependencyReducedPom>-->
+<!--							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>-->
+<!--							<minimizeJar>true</minimizeJar>-->
+<!--							<shadeSourcesContent>true</shadeSourcesContent>-->
+<!--							<filters>-->
+<!--								<filter>-->
+<!--									<artifact>*:*</artifact>-->
+<!--									<includes>-->
+<!--										<include>org/primefaces/${project.name}/component/*</include>-->
+<!--										<include>META-INF/MANIFEST.MF</include>-->
+<!--										<include>META-INF/faces-config.xml</include>-->
+<!--										<include>META-INF/primefaces-${project.name}.taglib.xml</include>-->
+<!--										<include>META-INF/resources/primefaces-${project.name}-*/*</include>-->
+<!--									</includes>-->
+<!--								</filter>-->
+<!--							</filters>-->
+<!--						</configuration>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<id>jakarta</id>-->
+<!--								<phase>package</phase>-->
+<!--								<goals>-->
+<!--									<goal>shade</goal>-->
+<!--								</goals>-->
+<!--								<configuration>-->
+<!--									<shadedArtifactAttached>true</shadedArtifactAttached>-->
+<!--									<shadedClassifierName>jakarta</shadedClassifierName>-->
+<!--									<createDependencyReducedPom>false</createDependencyReducedPom>-->
+<!--									<transformers>-->
+<!--										<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>-->
+<!--										<transformer implementation="io.yupiik.maven.shade.transformer.RelocationTransformer">-->
+<!--											<delegates>-->
+<!--												<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>-->
+<!--												<transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">-->
+<!--													<resource>META-INF/faces-config.xml</resource>-->
+<!--												</transformer>-->
+<!--												<transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">-->
+<!--													<resource>META-INF/primefaces-${project.name}.taglib.xml</resource>-->
+<!--												</transformer>-->
+<!--											</delegates>-->
+<!--										</transformer>-->
+<!--									</transformers>-->
+<!--									<artifactSet>-->
+<!--										<includes>-->
+<!--											<include>${project.groupId}:${project.artifactId}</include>-->
+<!--										</includes>-->
+<!--									</artifactSet>-->
+<!--									<relocations>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.faces</pattern>-->
+<!--											<shadedPattern>jakarta.faces</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.el</pattern>-->
+<!--											<shadedPattern>jakarta.el</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.annotation</pattern>-->
+<!--											<shadedPattern>jakarta.annotation</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.servlet</pattern>-->
+<!--											<shadedPattern>jakarta.servlet</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.persistence</pattern>-->
+<!--											<shadedPattern>jakarta.persistence</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.enterprise</pattern>-->
+<!--											<shadedPattern>jakarta.enterprise</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.xml.bind</pattern>-->
+<!--											<shadedPattern>jakarta.xml.bind</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.validation</pattern>-->
+<!--											<shadedPattern>jakarta.validation</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.inject</pattern>-->
+<!--											<shadedPattern>jakarta.inject</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.activation</pattern>-->
+<!--											<shadedPattern>jakarta.activation</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.ws.rs</pattern>-->
+<!--											<shadedPattern>jakarta.ws.rs</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.jws</pattern>-->
+<!--											<shadedPattern>jakarta.jws</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.cache</pattern>-->
+<!--											<shadedPattern>jakarta.cache</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.xml.ws</pattern>-->
+<!--											<shadedPattern>jakarta.xml.ws</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>javax.xml.soap</pattern>-->
+<!--											<shadedPattern>jakarta.xml.soap</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>window.jsf</pattern>-->
+<!--											<shadedPattern>window.faces</shadedPattern>-->
+<!--										</relocation>-->
+<!--										<relocation>-->
+<!--											<pattern>jsf.ajax</pattern>-->
+<!--											<shadedPattern>faces.ajax</shadedPattern>-->
+<!--										</relocation>-->
+<!--									</relocations>-->
+<!--								</configuration>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--						<dependencies>-->
+<!--							<dependency>-->
+<!--								<groupId>io.yupiik.maven</groupId>-->
+<!--								<artifactId>maven-shade-transformers</artifactId>-->
+<!--								<version>0.0.1</version>-->
+<!--							</dependency>-->
+<!--						</dependencies>-->
+<!--					</plugin>-->
+<!--				</plugins>-->
+<!--			</build>-->
+<!--		</profile>-->
+<!--		<profile>-->
+<!--			<id>deploy</id>-->
+<!--			<activation>-->
+<!--				<activeByDefault>true</activeByDefault>-->
+<!--			</activation>-->
+<!--			<build>-->
+<!--				<plugins>-->
+<!--					<plugin>-->
+<!--						<groupId>org.apache.maven.plugins</groupId>-->
+<!--						<artifactId>maven-war-plugin</artifactId>-->
+<!--						<version>3.3.2</version>-->
+<!--						<configuration>-->
+<!--							<webResources>-->
+<!--								<resource>-->
+<!--									<filtering>true</filtering>-->
+<!--									<directory>src/main/webapp</directory>-->
+<!--									<includes>-->
+<!--										<include>**/web.xml</include>-->
+<!--									</includes>-->
+<!--								</resource>-->
+<!--							</webResources>-->
+<!--							<warSourceDirectory>src/main/webapp</warSourceDirectory>-->
+<!--							<webXml>${project.build.directory}/web.xml</webXml>-->
+<!--						</configuration>-->
+<!--					</plugin>-->
+<!--				</plugins>-->
+<!--			</build>-->
+<!--		</profile>-->
+<!--	</profiles>-->
+</project>

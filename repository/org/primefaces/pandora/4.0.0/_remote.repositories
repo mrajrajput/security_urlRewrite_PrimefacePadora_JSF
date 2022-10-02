@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sat Oct 01 10:48:14 CDT 2022
+pandora-4.0.0.pom>=
+pandora-4.0.0.jar>=
+pandora-4.0.0.zip>=
+pandora-4.0.0-jakarta.jar>=
+pandora-4.0.0.war>=

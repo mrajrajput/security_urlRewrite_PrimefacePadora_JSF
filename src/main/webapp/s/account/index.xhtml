@@ -1,0 +1,137 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Menu</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <div class="grid">
+                <div class="col-12 md:col-6">
+                    <div class="card ui-fluid">
+                        <h5>#{msg['profile.personal.picture']}</h5>
+                        <div class="formgrid grid">
+                            <div class="field col-3">
+                                <p:avatar styleClass="mr-2" size="xlarge" shape="circle">
+                                    <p:graphicImage name="images/profile.png" library="pandora-layout"/>
+                                </p:avatar>
+                            </div>
+
+                            <div class="field col">
+                                <p>Your avatar will show to other peaple, choose your avatar and then click save ,your avatar must be under 100kb</p>
+                            </div>
+                        </div>
+                        <p:fileUpload mode="simple" skinSimple="true" style="float: right;"
+                                      sizeLimit="102400" allowTypes="/(\.|\/)(jpe?g)$/"
+                                      invalidSizeMessage="Maximum file size allowed is 100 KB"
+                                      invalidFileMessage="only jpg | jpeg is allowed"
+                                      update=":messagesPanel"
+                                      listener="#{profileBean.handleFileUpload}"/>
+                        <p:commandButton type="button" value="#{msg['profile.save']}"
+                                         style="display:inline-block;margin-top:5px; width: auto"/>
+                    </div>
+                    <div class="card ui-fluid">
+                        <h5>#{msg['profile.personal.information']}</h5>
+                        <div class="field">
+                            <p:outputLabel for="name">#{msg['profile.name']}</p:outputLabel>
+                            <p:inputText id="name" value="#{profileBean.dto.name}" maxlength="12" rendered="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="family">#{msg['profile.family']}</p:outputLabel>
+                            <p:inputText id="family" value="#{profileBean.dto.family}" maxlength="12" rendered="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="gender">#{msg['profile.gender']}</p:outputLabel>
+                            <p:inputText id="gender" value="#{profileBean.dto.gender}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="nationalcode">#{msg['profile.nationalcode']}</p:outputLabel>
+                            <p:inputText id="nationalcode" value="#{profileBean.dto.nationalcode}" maxlength="10"
+                                         rendered="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="iban">#{msg['profile.iban']}</p:outputLabel>
+                            <p:inputText id="iban" value="#{profileBean.dto.iban}" maxlength="24" rendered="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="bio">#{msg['profile.bio']}</p:outputLabel>
+                            <p:inputTextarea id="bio" value="#{profileBean.dto.about}" maxlength="250" rendered="true"/>
+                        </div>
+                        <div class="field">
+                            <p:commandButton type="button" value="#{msg['profile.save']}"
+                                             actionListener="#{profileBean.changePassword()}"
+                                             style="display:inline-block;margin-top:5px; width: auto"/>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-12 md:col-6">
+                    <div class="card ui-fluid">
+                        <h5>#{msg['profile.change.password']}</h5>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <p:outputLabel for="oldPassword">#{msg['profile.password.old']}</p:outputLabel>
+                                <p:password id="oldPassword" maxlength="10" rendered="true"/>
+                            </div>
+                            <div class="field col">
+                                <p:outputLabel for="newPassword">#{msg['profile.password.new']}</p:outputLabel>
+                                <p:password id="newPassword" feedback="true" match="reNewPassword" maxlength="10"
+                                            rendered="true"/>
+                            </div>
+                            <div class="field col">
+                                <p:outputLabel for="reNewPassword">#{msg['profile.password.reenter']}</p:outputLabel>
+                                <p:password id="reNewPassword" maxlength="10" rendered="true"/>
+                            </div>
+                        </div>
+                        <p:commandButton type="button" value="#{msg['profile.save']}"
+                                         actionListener="#{profileBean.saveProfile()}"
+                                         style="display:inline-block;margin-top:5px; width: auto"/>
+                    </div>
+                    <div class="card ui-fluid">
+                        <h5>#{msg['profile.personal.contact']}</h5>
+                        <div class="field">
+                            <p:outputLabel for="cellphone">#{msg['profile.cellphone']}</p:outputLabel>
+                            <p:inputText id="cellphone" disabled="true" value="#{profileBean.dto.cellphone}"
+                                         maxlength="11" rendered="true">
+                                <f:validateRegex pattern="09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}"/>
+                            </p:inputText>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="phone">#{msg['profile.phone']}</p:outputLabel>
+                            <p:inputText id="phone" value="#{profileBean.dto.phone}" maxlength="8" rendered="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="email">#{msg['profile.email']}</p:outputLabel>
+                            <p:inputText id="email" disabled="true" value="#{profileBean.dto.email}" maxlength="40"
+                                         required="true">
+                                <f:validateRegex
+                                        pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                            </p:inputText>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="address">#{msg['profile.address']}</p:outputLabel>
+                            <p:inputText id="address" value="#{profileBean.dto.address}" maxlength="150"
+                                         rendered="true"/>
+                        </div>
+                        <div class="field">
+                            <p:commandButton type="button" value="#{msg['profile.save']}"
+                                             actionListener="#{profileBean.saveContact()}"
+                                             style="display:inline-block;margin-top:5px; width: auto"/>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h5>#{msg['profile.activity']}</h5>
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

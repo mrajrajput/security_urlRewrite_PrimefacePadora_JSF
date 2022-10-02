@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{msg['page.finance']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="grid crud-demo">
+                <div class="col-12">
+                    <div class="card">
+                        <p:dataTable widgetVar="dataDT" id="dataTable" var="data" value="#{financeBean.dtoList}"
+                                     reflow="true" style="min-height: 500px" resizableColumns="true"
+                                     rowKey="#{data.id}" rowIndexVar="row"
+                                     paginator="true" rows="10" paginatorPosition="bottom" >
+                            <f:facet name="header">
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    <p:commandButton styleClass="table-new" id="new" type="button" value="#{msg['menu.new']}"
+                                                     update="form"  onclick="PF('dlg').show()" icon="pi pi-plus"/>
+                                    <div class="customers-table-header table-search">
+                                        <span class="ui-input-icon-left filter-container">
+                                            <i class="pi pi-search"/>
+                                            <p:inputText id="globalFilter" styleClass="table-search-input" style="background-color: white" onkeyup="PF('dataDT').filter()"
+                                                         placeholder="#{msg['table.search']}"/>
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                            </f:facet>
+                            <p:column headerText="#{msg['table.header.index']}" width="10%" responsivePriority="6"
+                                      style="vertical-align: middle;">
+                                <h:outputText value=" #{row+1}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.user']}" sortBy="#{data.userDto.family}"
+                                      filterBy="#{data.userDto.family}" responsivePriority="4">
+                                <h:outputText value="#{data.userDto.name} #{data.userDto.family}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.title']}" sortBy="#{data.amount}"
+                                      filterBy="#{data.amount}"
+                                      responsivePriority="3">
+                                <h:outputText value="#{data.amount}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.brief']}" sortBy="#{data.desc}"
+                                      filterBy="#{data.desc}"
+                                      responsivePriority="4">
+                                <h:outputText value="#{data.desc}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.datetime']}" sortBy="#{data.createDateTime}"
+                                      filterBy="#{data.createDateTime}" responsivePriority="5">
+                                <h:outputText value="#{data.createDateTime}">
+                                    <f:convertDateTime pattern="yyyy/MM/dd HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="#{msg['table.header.operation']}" width="10%"
+                                      exportable="false"   style="text-align: center;" responsivePriority="2">
+                                <p:menuButton icon="pi pi-cog" buttonStyleClass="ui-button-secondary"
+                                              buttonStyle="box-shadow: 0 0 10px">
+                                    <p:menuitem value="#{msg['menu.view']}" update=":messagesPanel form" icon="pi pi-eye"  oncomplete="PF('dlg').show()">
+                                        <f:setPropertyActionListener value="#{data}"
+                                                                     target="#{financeBean.financeDto}"/>
+                                    </p:menuitem>
+                                    <p:menuitem value="#{msg['menu.edit']}" update=":messagesPanel form" icon="pi pi-pencil"  oncomplete="PF('dlg').show()">
+                                        <f:setPropertyActionListener value="#{data}"
+                                                                     target="#{financeBean.financeDto}"/>
+                                    </p:menuitem>
+                                    <p:separator />
+                                    <p:menuitem value="#{msg['menu.delete']}"  action="#{financeBean.deleteRecord}" update=":messagesPanel form" icon="pi pi-times">
+                                        #{msg['menu.delete']}
+                                        <p:confirm header="#{msg['menu.confirmation']}" message="#{msg['menu.confirmation.message']}" icon="pi pi-info-circle"/>
+                                        <f:setPropertyActionListener value="#{data}"
+                                                                     target="#{financeBean.financeDto}"/>
+                                    </p:menuitem>
+                                </p:menuButton>
+                            </p:column>
+                            <f:facet name="footer">
+                                <div class="p-d-flex p-jc-between">
+                                    <p:commandButton icon="pi pi-file-excel" styleClass="p-mr-2 p-mb-2 export"
+                                                     style="margin: 2px">
+                                        <p:dataExporter type="xls" target="dataTable" fileName="exort"/>
+                                    </p:commandButton>
+
+                                    <p:commandButton icon="pi pi-file-pdf" styleClass="p-mr-2 p-mb-2 export"
+                                                     style="margin: 2px">
+                                        <p:dataExporter type="pdf" target="dataTable" fileName="exort"/>
+                                    </p:commandButton>
+
+                                    <p:commandButton icon="pi pi-file" styleClass="p-mr-2 p-mb-2 export" style="margin: 2px">
+                                        <p:dataExporter type="csv" target="dataTable" fileName="exort"/>
+                                    </p:commandButton>
+
+                                    <span style="font-weight: bold" class="tableToggler">
+                                            <p:commandButton id="toggler" type="button" icon="pi pi-align-justify"/>
+                                            <p:columnToggler datasource="dataTable" trigger="toggler"/>
+                                        </span>
+                                </div>
+
+                            </f:facet>
+                        </p:dataTable>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="350">
+                            <p:commandButton value="#{msg['menu.confirmation.yes']}" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="#{msg['menu.confirmation.no']}" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </div>
+                </div>
+            </div>
+
+            <p:dialog header="#{msg['dialog.title.new']}"
+                      widgetVar="dlg" modal="true" showEffect="fade"
+                      hideEffect="fade"
+                      resizable="false">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="ui-fluid formgrid grid">
+                            <div class="field col-12 md:col-6">
+                                <p:outputLabel for="title" value="#{msg['table.header.title']}" />
+                                <p:inputText id="title" value="#{financeBean.getDto().desc}" disabled="#{financeBean.editMode}"/>
+                            </div>
+                            <div class="empty-table"/>
+                            <div class="field col-12 md:col-6">
+<!--                                <p:outputLabel for="time" value="#{msg['table.header.scheduler.time']}" />-->
+<!--                                <p:datePicker id="time" value="#{financeBean.getDto().desc}"  disabled="#{newsBean.editMode}"-->
+<!--                                              timeOnly="false" pattern="yyyy/MM/dd HH:mm"  showIcon="true"/>-->
+                            </div>
+                            <div class="field col-12">
+                                <p:outputLabel for="brief" value="#{msg['table.header.brief']}" />
+                                <p:inputText id="brief" value="#{financeBean.getDto().desc}" disabled="#{financeBean.editMode}"/>
+                            </div>
+                            <div class="field col-12">
+                                <p:outputLabel for="content" value="#{msg['table.header.news']}" />
+                                <p:inputTextarea id="content" rows="4"  value="#{financeBean.getDto().desc}" disabled="#{financeBean.editMode}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <f:facet name="footer">
+                    <p:commandButton value="#{msg['dialog.dismiss']}" type="button" styleClass="ui-button-secondary" onclick="PF('dlg').hide()" />
+                    <p:commandButton value="#{msg['dialog.save']}"
+                                     styleClass="ui-button-secondary" actionListener="#{financeBean.insertRecord()}"
+                                     update=":messagesPanel" onclick="PF('dlg').hide()"  icon="pi pi-check"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

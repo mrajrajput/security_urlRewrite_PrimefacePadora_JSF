@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns="http://www.w3.org/1999/xhtml">
+<ui:composition template="../layout.xhtml">
+
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" />
+		<!--			<p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />-->
+
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate/>
+		</p:messages>
+
+		<h:form  id="productFormCustomLogin_Login">
+			<h:head>
+				<style type="text/css">
+					/* below css hides growls in small screens and makes messages visible */
+					@media ( max-width: 768px) {
+						body div.ui-growl {
+							display: none;
+						}
+
+						body div.ui-messages {
+							display: block;
+						}
+					}
+
+					/* below css hides messages in medium/big devices and makes growl visible in such devices */
+					@media ( min-width: 769px) {
+						body div.ui-growl {
+							display: block;
+						}
+
+						body div.ui-messages {
+							display: none;
+						}
+					}
+
+					body {
+						overflow-y: hidden;
+					}
+
+					body.login-page {
+						background-color: transparent;
+					}
+
+					html {
+						/*background-image: -webkit-linear-gradient(bottom, #6B77A1 0%, #737EA5 3%, #9599B3 15%,
+						#B1B0BF 28%, #C7C1C8 41%, #D6CDCF 57%, #DFD5D3 74%, #E2D7D4 100%);*/
+						background: -webkit-linear-gradient(90deg, hsla(240, 51%, 67%, 1) 0%, hsla(176, 68%, 74%, 1) 100%);
+						filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#7F7FD5", endColorstr="#91EAE4", GradientType=1 );
+						-webkit-background-size: cover;
+						-moz-background-size: cover;
+						-o-background-size: cover;
+						background-size: cover;
+					}
+
+					.login-form {
+						width: 385px;
+						margin: 30px auto;
+					}
+					.login-form form {
+						margin-bottom: 15px;
+						background: #f7f7f7;
+						box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+						padding: 30px;
+					}
+					.login-form h2 {
+						margin: 0 0 15px;
+					}
+					.form-control, .login-btn {
+						min-height: 38px;
+						border-radius: 2px;
+					}
+					.input-group-addon .fa {
+						font-size: 18px;
+					}
+					.login-btn {
+						font-size: 15px;
+						font-weight: bold;
+					}
+					.social-btn .btn {
+						border: none;
+						margin: 10px 3px 0;
+						opacity: 1;
+					}
+					.social-btn .btn:hover {
+						opacity: 0.9;
+					}
+					.social-btn .btn-primary {
+						background: #507cc0;
+					}
+					.social-btn .btn-info {
+						background: #64ccf1;
+					}
+					.social-btn .btn-danger {
+						background: #df4930;
+					}
+					.or-seperator {
+						margin-top: 20px;
+						text-align: center;
+						border-top: 1px solid #ccc;
+					}
+					.or-seperator i {
+						padding: 0 10px;
+						background: #f7f7f7;
+						position: relative;
+						top: -11px;
+						z-index: 1;
+					}
+					.login-logo .container a {
+						font-size: 45px;
+					}
+					.login-logo .container, .col-sm-1, .col-sm-2 {
+						padding-left: 0px;
+					}
+				</style>
+			</h:head>
+
+			<p class="text-center">Login with your social media account</p>
+			<div class="text-center social-btn">
+				<a href="/oauth2/authorization/facebook" class="btn btn-primary"><i class="fa fa-facebook"></i>&#160; Facebook</a>
+				<!--<a href="#" class="btn btn-info"><i class="fa fa-twitter"></i>&#160; Twitter</a>-->
+				<a href="/oauth2/authorization/google" class="btn btn-danger"><i class="fa fa-google"></i>&#160; Google</a>
+			</div>
+
+			<!-- <h:form id="productFormCustomLogin_Login" action="${request.contextPath}/appLogin" method="POST">-->
+			<h:panelGrid header="Products List" columns="2">
+
+				<f:facet name="header">Enter UserName:</f:facet>
+				<input type="text" name="app_username"/><br/><br/>
+				<h:outputText  value="test name" />
+
+				<f:facet name="header">Enter Password:</f:facet>
+				<input type="text" name="app_password"/><br/><br/>
+
+<!--				<input type="submit" value="Login"/>-->
+				<h:commandButton value="Save" action="#{myloginController.save}" />
+<!--				<p:commandButton value="Save" onclick="window.location.href='/list'"/>-->
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

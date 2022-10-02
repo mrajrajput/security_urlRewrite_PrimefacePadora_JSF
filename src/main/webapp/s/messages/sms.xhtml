@@ -1,0 +1,148 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{msg['page.messages.sms']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="grid crud-demo">
+                <div class="col-12">
+                    <div class="card">
+                        <p:dataTable widgetVar="dataDT" id="dataTable" var="data" value="#{messageSmsBean.messageDtoList}"
+                                     reflow="true" style="min-height: 500px" resizableColumns="true"
+                                     rowKey="#{data.id}" rowIndexVar="row"
+                                     paginator="true" rows="10" paginatorPosition="bottom">
+                            <f:facet name="header">
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    <p:commandButton styleClass="table-new" id="new" disabled="true" type="button" value="#{msg['menu.new']}"
+                                                     update="form:dlg form:dataTable" onclick="PF('dlg').show()" icon="pi pi-plus"/>
+                                    <div class="customers-table-header table-search">
+                                        <span class="ui-input-icon-left filter-container">
+                                            <i class="pi pi-search"/>
+                                            <p:inputText id="globalFilter" styleClass="table-search-input" style="background-color: white" onkeyup="PF('dataDT').filter()"
+                                                         placeholder="#{msg['table.search']}"/>
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                            </f:facet>
+                            <p:column headerText="#{msg['table.header.index']}" width="10%" responsivePriority="6"
+                                      style="vertical-align: middle;">
+                                <h:outputText value=" #{row+1}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.receiver']}" sortBy="#{data.receiver.name}"
+                                      filterBy="#{data.receiver.name}" responsivePriority="4">
+                                <h:outputText value="#{data.receiver.name} #{data.receiver.family}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.cellphone']}" sortBy="#{data.receiver.cellphone}"
+                                      filterBy="#{data.receiver.cellphone}" responsivePriority="4">
+                                <h:outputText value="#{data.receiver.cellphone}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.message']}" sortBy="#{data.message}"
+                                      filterBy="#{data.message}"
+                                      responsivePriority="3">
+                                <h:outputText value="#{data.message}"/>
+                            </p:column>
+                            <p:column headerText="#{msg['table.header.datetime']}" sortBy="#{data.createDateTime}"
+                                      filterBy="#{data.createDateTime}" responsivePriority="5">
+                                <h:outputText value="#{data.createDateTime}">
+                                    <f:convertDateTime pattern="yyyy/MM/dd HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="#{msg['table.header.operation']}" width="10%"
+                                      exportable="false" style="text-align: center;" responsivePriority="2">
+                                <p:menuButton icon="pi pi-cog" buttonStyleClass="ui-button-secondary"
+                                              buttonStyle="box-shadow: 0 0 10px">
+                                    <p:menuitem value="#{msg['menu.view']}"
+                                                update=":messagesPanel form:dlg"
+                                                icon="pi pi-eye" oncomplete="PF('dlg').show()">
+                                        <f:setPropertyActionListener value="#{data}"
+                                                                     target="#{messageBean.messageDto}"/>
+                                    </p:menuitem>
+                                    <p:separator/>
+                                    <p:menuitem value="#{msg['menu.delete']}" action="#{messageSmsBean.deleteRecord}"
+                                                update=":messagesPanel form:dataTable" icon="pi pi-times">
+                                        #{msg['menu.delete']}
+                                        <p:confirm header="#{msg['menu.confirmation']}"
+                                                   message="#{msg['menu.confirmation.message']}"
+                                                   icon="pi pi-info-circle"/>
+                                        <f:setPropertyActionListener value="#{data}"
+                                                                     target="#{messageSmsBean.messageDto}"/>
+                                    </p:menuitem>
+                                </p:menuButton>
+                            </p:column>
+                            <f:facet name="footer">
+                                <div class="p-d-flex p-jc-between">
+                                    <p:commandButton id="exportExcel" icon="pi pi-file-excel" styleClass="p-mr-2 p-mb-2"
+                                                     style="margin: 2px">
+                                        <p:dataExporter type="xls" target="dataTable" fileName="#{msg['export.file.name']}"/>
+                                    </p:commandButton>
+                                    <p:tooltip for="exportExcel" value="#{msg['export.file.excel']}" showEffect="clip" hideEffect="fold" />
+
+                                    <p:commandButton id="exportPdf" icon="pi pi-file-pdf" styleClass="p-mr-2 p-mb-2"
+                                                     style="margin: 2px">
+                                        <p:dataExporter type="pdf" target="dataTable" fileName="#{msg['export.file.name']}"/>
+                                    </p:commandButton>
+                                    <p:tooltip for="exportPdf" value="#{msg['export.file.pdf']}" showEffect="clip" hideEffect="fold" />
+
+                                    <p:commandButton id="exportFile" icon="pi pi-file" styleClass="p-mr-2 p-mb-2" style="margin: 2px">
+                                        <p:dataExporter type="csv" target="dataTable" fileName="#{msg['export.file.name']}"/>
+                                    </p:commandButton>
+                                    <p:tooltip for="exportFile" value="#{msg['export.file.csv']}" showEffect="clip" hideEffect="fold" />
+
+                                    <span style="font-weight: bold" class="tableToggler">
+                                            <p:commandButton id="toggler" type="button" icon="pi pi-align-justify"/>
+                                            <p:columnToggler datasource="dataTable" trigger="toggler"/>
+                                        </span>
+                                </div>
+
+                            </f:facet>
+                        </p:dataTable>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="350">
+                            <p:commandButton value="#{msg['menu.confirmation.yes']}" type="button"
+                                             styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                            <p:commandButton value="#{msg['menu.confirmation.no']}" type="button"
+                                             styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times"/>
+                        </p:confirmDialog>
+                    </div>
+                </div>
+            </div>
+            <p:dialog header="#{msg['dialog.title.new']}"
+                      widgetVar="dlg" id="dlg" modal="true" showEffect="fade"
+                      hideEffect="fade" width="500"
+                      resizable="false">
+                <p:panelGrid style="padding: 0px;  width:100%" >
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="#{messageBean.getDto().sender.name} #{messageBean.getDto().sender.family}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value=" #{messageBean.getDto().createDateTime}">
+                                <f:convertDateTime pattern="yyyy/MM/dd HH:mm"/>
+                            </p:outputLabel>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="#{messageBean.getDto().message}"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <f:facet name="footer">
+                    <p:commandButton value="#{msg['dialog.dismiss']}" type="button" styleClass="ui-button-secondary"
+                                     onclick="PF('dlg').hide()"/>
+
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

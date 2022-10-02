@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+    </f:facet>
+    <title>Login</title>
+</h:head>
+
+<h:body styleClass="login-body">
+
+    <div id="login-wrapper">
+        <!--            <p:graphicImage name="images/login-logo.png" library="omega-layout" />-->
+        <h:form prependId="false" id="frm_login" onsubmit="document.getElementById('frm_login').action='/login';">
+            <div id="login-container">
+                <span class="title">#{msg['login.title']}</span>
+
+                <div class="grid ui-fluid">
+                    <div class="col-12">
+                        <p:inputText rendered="true" name="username" placeholder="#{msg['login.username']}"
+                                     id="username"/>
+                    </div>
+                    <div class="col-12">
+                        <p:password rendered="true" name="password" placeholder="#{msg['login.password']}"
+                                    feedback="false" id="password"/>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <span class="remember-me">#{msg['login.remember.me']}</span>
+                        <p:selectBooleanCheckbox id="remember-me"/>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <p:link>#{msg['login.forgot.password']}</p:link>
+                    </div>
+<!--                    <div class="col-12">-->
+<!--                        <p:captcha label="Captcha"/>-->
+<!--                    </div>-->
+                    <div class="col-12">
+                        <p:commandButton type="submit" action="/login" ajax="false" value="#{msg['login.sign.in']}"
+                                         icon="pi pi-user"/>
+                    </div>
+                    <div class="col-12">
+                        <p:selectOneMenu id="locale" value="#{guestPreferences.locale}" onchange="submit()"
+                                         valueChangeListener="#{guestPreferences.changeLanguage}">
+                            <f:selectItems value="#{guestPreferences.countries}"/>
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <!--            <div class="login-footer">PrimeFaces Omega</div>-->
+    </div>
+
+    <h:outputStylesheet name="css/#{guestPreferences.themePath}" library="omega-layout"/>
+    <h:outputStylesheet name="css/primeicons.css" library="omega-layout"/>
+    <h:outputStylesheet name="css/primeflex.min.css" library="omega-layout"/>
+    <h:outputStylesheet name="css/layout-light.css" library="omega-layout"/>
+</h:body>
+
+</html>
