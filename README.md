@@ -14,6 +14,8 @@ Other urls are: http://localhost:8080/single?value=2, http://localhost:8080/list
 
 For other URLs, you have to type manually
 http://localhost:8080/s/account/index.jsf
+
+for your working start replacing files under webapp/s/* folder and put your files related to your things.
 ```
 
 <br/>
