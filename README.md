@@ -4,6 +4,10 @@ http://localhost:8080/account will take you to dashboard.xhtml page after login 
 pom.xml is skinned a lot and lots of unwanted things are commented out.
 'repository' directory contains the repository for primefaces-pandora.
 
+don't remove folders under 'resources' folder
+there are ton's of xhtml added in 'webapp' folder from primefaces-pandora
+webapp/s/* and webapp/ns/* are there but don't work since they are not mapped to the right bean.
+
 ```
 
 <br/>
