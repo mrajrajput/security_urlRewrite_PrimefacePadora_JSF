@@ -49,7 +49,7 @@ in VM option under 'Runner' configuration
 
 <br/>
 
-###pom.xml
+### pom.xml
 ````
 This is good for Start/run of SpringBoot project -  Maven plugin
 
@@ -60,6 +60,8 @@ This is good for Start/run of SpringBoot project -  Maven plugin
 ````
 
 ```
+Note: Primefaces-Pandora has it in-built, so we dont need to have jsf-imp included like mentioned below.
+
 mojarra Implementation of JSF
 
 <dependency>
@@ -128,7 +130,7 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/productOAuth0?default_dat
 
 ```
 
-###Follow this project for Joint 
+### Follow this project for Joint 
 /Users/Manjul/IdeaProjects/control-route-optimizer
 
 # For URL Rewrite
@@ -156,7 +158,7 @@ This is not JSF related ReWrite but JavaEE related
 ```
 <br/>
 
-###Information realted to ReWrite
+### Information realted to ReWrite
 ```
 @Join(path="/path", to="toJsf")
 Query variable will have @Deferred and @Parameter
@@ -256,7 +258,7 @@ protected void configure(HttpSecurity http) throws Exception { }
 ```
 
 
-###Security
+### Security
 ```
 This project may not be enough
 /Users/Manjul/Downloads/ProductManagerGoogleLogin 
