@@ -8,6 +8,12 @@ don't remove folders under 'resources' folder
 there are ton's of xhtml added in 'webapp' folder from primefaces-pandora
 webapp/s/* and webapp/ns/* are there but don't work since they are not mapped to the right bean.
 
+working urls:
+http://localhost:8080 will take you to http://localhost:8800/account url with help from index.html. 
+Other urls are: http://localhost:8080/single?value=2, http://localhost:8080/list, http://localhost:8080/product
+
+For other URLs, you have to type manually
+http://localhost:8080/s/account/index.jsf
 ```
 
 <br/>
